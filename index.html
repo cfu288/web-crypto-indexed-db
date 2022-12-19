@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+    <title>WebCrypto + IndexedDB</title>
+    <script type="module" crossorigin src="/assets/index-e257335e.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <h1>WebCrypto + IndexedDB</h1>
+    <p>
+      Securely create and persist public/private keys in the browser. In this
+      example, we use a generated key pair to sign and validate a JWT completely
+      in the browser. The key pair is never directly exposed to the end user or
+      the JS runtime. The key itself is not extractable.
+    </p>
+    <p>
+      Because the private key is persisted, we can continue to sign JWT's with
+      the same private key until browser storage is cleared. This can be handy
+      for some use cases like
+      <a href="https://www.rfc-editor.org/rfc/rfc7591"
+        >OAuth2's Dynamic Client Registration Protocol</a
+      >.
+    </p>
+    <p>
+      <b>Open the console to see the demo (Press F12)</b>
+    </p>
+    <p>
+      If everything is working, you should see a JWT being signed and validated
+      in the console. Note you need to have SSL enabled for this to work.
+    </p>
+    <p>
+      <a
+        href="https://github.com/cfu288/web-crypto-indexed-db/blob/main/src/main.ts"
+        >See the code</a
+      >
+    </p>
+    
+  </body>
+</html>
