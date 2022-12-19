@@ -332,22 +332,18 @@ export async function verifyJwt(jwt: string) {
   );
 }
 
-export interface JsonWebKeyWKid extends JsonWebKey {
-  kid: string;
-  kty: string;
-  e: string;
-  n: string;
-}
-
-export interface JsonWebKeySet {
-  keys: JsonWebKeyWKid[];
-}
-
 // Run code in the browser console
 (async () => {
   const keys = await getPublicKey();
+  console.group("Public Key");
   console.log(keys);
+  console.groupEnd();
   const jwt = await signJwt({ hello: "world" });
+  console.group("JWT created and signed using Private Key");
+  console.log(jwt);
+  console.groupEnd();
   const isValid = await verifyJwt(jwt);
-  console.log("verify data", isValid);
+  console.group("Validate JWT using Public Key");
+  console.log(isValid ? "JWT is valid" : "JWT is invalid");
+  console.groupEnd();
 })();
