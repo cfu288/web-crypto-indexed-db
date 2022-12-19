@@ -1,9 +1,8 @@
 name: Deploy to GH PAges
 
 on:
-  pull_request_target:
-    branches:
-      - main
+  branches:
+    - main
 
 jobs:
   build-and-deploy:
