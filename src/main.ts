@@ -246,11 +246,18 @@ export function arrayBufferToBase64(arrayBuffer: ArrayBuffer): string {
   byteArray.forEach((byte) => {
     byteString += String.fromCharCode(byte);
   });
-  return btoa(byteString);
+  return btoa(byteString)
+    .replace(/=/g, "")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_");
 }
 
 export function base64ToArrayBuffer(base64: string) {
-  const binary_string = atob(base64);
+  const base64Formatted = base64
+    .replace(/-/g, "+")
+    .replace(/_/g, "/")
+    .replace(/\s/g, "");
+  const binary_string = atob(base64Formatted);
   const len = binary_string.length;
   const bytes = new Uint8Array(len);
   for (let i = 0; i < len; i++) {
@@ -295,12 +302,12 @@ export async function signJwt(tokenPayload: TokenPayload): Promise<string> {
   };
 
   const nowInSeconds = Math.floor(Date.now() / 1000);
-  const futureTimeExpiry = 86400;
+  const futureTimeExpiry = 300;
 
   const payload: TokenPayload = {
     iat: nowInSeconds,
     nbf: nowInSeconds,
-    exp: futureTimeExpiry,
+    exp: nowInSeconds + futureTimeExpiry,
     ...tokenPayload,
   };
 
