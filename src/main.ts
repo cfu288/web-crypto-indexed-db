@@ -3,8 +3,8 @@ type Data = ArrayBuffer;
 
 // Configuration for IndexedDb for local key store
 export const IDBConfig = {
-  DATABASE_NAME: "MariKeyDb",
-  OBJECT_STORE_NAME: "MariKeyObjectStore",
+  DATABASE_NAME: "KeyDb",
+  OBJECT_STORE_NAME: "KeyObjectStore",
   VERSION: 1,
   KEY_ID: 1,
 };
