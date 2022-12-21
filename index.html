@@ -5,43 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
     <title>WebCrypto + IndexedDB</title>
+    <style>
+      section {
+        margin: 1rem;
+      }
+      article > h3 {
+        margin-top: 2rem;
+      }
+    </style>
   </head>
   <body>
-    <h1>WebCrypto + IndexedDB</h1>
-    <p>
-      Securely create and persist public/private keys in the browser. In this
-      demo, we use a key pair generated with WebCrypto to sign and validate a
-      JWT completely in the browser.
-    </p>
-    <p>
-      The cool thing about using the CryptoKey interface of WebCrypto is that
-      although we can use the key pair to sign and verify, the private key
-      remains opaque to the end-user or the JS runtime. The private key itself
-      is not extractable. We can store the CryptoKey object in IndexedDB for
-      later retrieval and use.
-    </p>
-    <p>
-      Because the private key is persisted, we can do things like continuously
-      sign JWT's with the same private key (until browser storage is cleared).
-      This can be handy for some use cases like
-      <a href="https://www.rfc-editor.org/rfc/rfc7591"
-        >OAuth2's Dynamic Client Registration Protocol</a
-      >.
-    </p>
-    <p>
-      <a
-        href="https://github.com/cfu288/web-crypto-indexed-db/blob/main/src/web-crypto.ts"
-        >See the code</a
-      >
-    </p>
-    <h2>Demo</h2>
-    <p>
-      In this demo, you should see a JWT being signed and validated using
-      public/private keys signed with WebCrypto as you click on the buttons
-      below. Note you need to have SSL enabled for this demo work - WebCrypto is
-      disabled in non SSL environments.
-    </p>
-    <div id="app"></div>
+    <section>
+      <h1>WebCrypto + IndexedDB</h1>
+      <p>
+        Securely create and persist public/private keys in the browser. In this
+        demo, we use a key pair generated with WebCrypto to sign and validate a
+        JWT completely in the browser.
+      </p>
+      <p>
+        The cool thing about using the CryptoKey interface of WebCrypto is that
+        although we can use the key pair to sign and verify, the private key
+        remains opaque to the end-user or the JS runtime. The private key itself
+        is not extractable. We can store the CryptoKey object in IndexedDB for
+        later retrieval and use.
+      </p>
+      <p>
+        Because the private key is persisted, we can do things like continuously
+        sign JWT's with the same private key (until browser storage is cleared).
+        This can be handy for some use cases like
+        <a href="https://www.rfc-editor.org/rfc/rfc7591"
+          >OAuth2's Dynamic Client Registration Protocol</a
+        >.
+      </p>
+      <p>
+        <a
+          href="https://github.com/cfu288/web-crypto-indexed-db/blob/main/src/web-crypto.ts"
+          >See the code</a
+        >
+      </p>
+    </section>
+    <section>
+      <h2>Demo</h2>
+      <p>
+        In this demo, you should see a JWT being signed and validated using
+        public/private keys signed with WebCrypto as you click on the buttons
+        below. Note you need to have SSL enabled for this demo work - WebCrypto
+        is disabled in non SSL environments.
+      </p>
+      <div id="app"></div>
+    </section>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
