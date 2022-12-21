@@ -6,7 +6,7 @@ import { getPublicKey } from "./web-crypto";
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 <div id="step1">
   <article>
-    <h3>1) Generate public + private key pair</h3>
+    <h2>1) Generate public + private key pair</h2>
     <button id="pkButton" type="button"></button>
     <p id="publicKeySubtitle"></p>
     <pre id="pkDisplay"></pre>
@@ -18,7 +18,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 
 const step2Html = `
 <article>
-<h3>2) Sign JWT</h3>
+<h2>2) Sign JWT</h2>
 <p>
   <label>JWT Body</label>
   <input id="jwtInput" type="text" value='{"hello": "world"}' />
