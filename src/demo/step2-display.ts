@@ -3,8 +3,8 @@ import { signJwt } from "../jwt-tools";
 const step2Html = `
 <article>
   <h2>2) Sign JWT</h2>
-  <p>Now that we've generated a public/private key pair, we can sign payloads like JWT's using the private key and later validate them using the public key.</p>
-  <p>Try providing sample JWT body below to see how we generate and sign a JWT using the body dynamically in the browser.</p>
+  <p>Now that we've generated a CryptoKey, we can sign payloads like JWT's using the private key and later validate them using the public key.</p>
+  <p>Try providing a sample JWT body below to see how we generate and sign a JWT using the body dynamically in the browser.</p>
   <p>
     <label>JWT Body</label>
     <input id="jwtInput" type="text" value='{"hello": "world"}' />
@@ -15,7 +15,9 @@ const step2Html = `
 </article>
 `;
 
-export async function setupJWTDisplay(activateNextStep: (jwt: string) => void) {
+export async function setupStep2Display(
+  activateNextStep: (jwt: string) => void
+) {
   // Initialize
   document.querySelector<HTMLDivElement>("#step2")!.innerHTML = step2Html;
   const buttonElement =
@@ -52,20 +54,28 @@ export async function setupJWTDisplay(activateNextStep: (jwt: string) => void) {
       return Promise.reject(e);
     }
   };
+  const resetInputText = () => {
+    jwtInputElement.value = '{"hello": "world"}';
+  };
 
   // Event listeners
   buttonElement.addEventListener("click", async () => {
     toggleButton();
     try {
-      const validJwtText = await getInputTextAsJson();
-      jwtText = `${await signJwt(validJwtText)}`;
-      setCodeDisplayText(buttonState ? jwtText : "");
-      setSubtitleText(
-        buttonState
-          ? "Below is the signed JWT using the above body from input field and private key previously stored from IndexedDB. You can validate this JWT at <a href='https://jwt.io/' target='_blank'>jwt.io</a> using the public key from the previous section."
-          : ""
-      );
-      activateNextStep(jwtText);
+      if (buttonState) {
+        const validJwtText = await getInputTextAsJson();
+        jwtText = `${await signJwt(validJwtText)}`;
+        setCodeDisplayText(jwtText);
+        setSubtitleText(
+          "Below is the signed JWT using the above body from input field and private key previously stored from IndexedDB. You can validate this JWT at <a href='https://jwt.io/' target='_blank'>jwt.io</a> using the public key from the previous section."
+        );
+        activateNextStep(jwtText);
+      } else {
+        // Reset
+        setSubtitleText("");
+        setCodeDisplayText("");
+        resetInputText();
+      }
     } catch (e) {
       setSubtitleText(
         "Invalid JSON provided. Please provide valid JSON for the JWT body.",

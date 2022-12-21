@@ -1,6 +1,6 @@
-import { setupJWTDisplay } from "./demo/jwt-display";
-import { setupPKDisplay } from "./demo/pk-display";
-import { setupVerifyDisplay } from "./demo/verify-display";
+import { setupStep2Display } from "./demo/step2-display";
+import { setupStep1Display } from "./demo/step1-display";
+import { setupStep3Display } from "./demo/step3-display";
 import { signJwt, verifyJwt } from "./jwt-tools";
 import { getPublicKey } from "./web-crypto";
 
@@ -10,20 +10,22 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 <div id="step3"></div>
 `;
 
-setupPKDisplay(() => setupJWTDisplay((jwt: string) => setupVerifyDisplay(jwt)));
+setupStep1Display(() =>
+  setupStep2Display((jwt: string) => setupStep3Display(jwt))
+);
 
-// // Run code in the browser console
-(async () => {
-  const keys = await getPublicKey();
-  console.group("Public Key");
-  console.log(keys);
-  console.groupEnd();
-  const jwt = await signJwt({ hello: "world" });
-  console.group("JWT created and signed using Private Key");
-  console.log(jwt);
-  console.groupEnd();
-  const isValid = await verifyJwt(jwt);
-  console.group("Validate JWT using Public Key");
-  console.log(isValid ? "JWT is valid" : "JWT is invalid");
-  console.groupEnd();
-})();
+// Run code in the browser console
+// (async () => {
+//   const keys = await getPublicKey();
+//   console.group("Public Key");
+//   console.log(keys);
+//   console.groupEnd();
+//   const jwt = await signJwt({ hello: "world" });
+//   console.group("JWT created and signed using Private Key");
+//   console.log(jwt);
+//   console.groupEnd();
+//   const isValid = await verifyJwt(jwt);
+//   console.group("Validate JWT using Public Key");
+//   console.log(isValid ? "JWT is valid" : "JWT is invalid");
+//   console.groupEnd();
+// })();
