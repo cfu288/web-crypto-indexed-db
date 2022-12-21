@@ -9,6 +9,10 @@ const step3Html = `
 </article>
 `;
 
+export function removeStep3Display() {
+  document.querySelector<HTMLDivElement>("#step3")!.innerHTML = "";
+}
+
 export async function setupStep3Display(jwt: string) {
   // Initialize
   document.querySelector<HTMLDivElement>("#step3")!.innerHTML = step3Html;

@@ -10,7 +10,10 @@ const step1Html = `
 </article>
 `;
 
-export async function setupStep1Display(activateNextStep: () => void) {
+export async function setupStep1Display(
+  activateNextStep: () => void,
+  deactivateNextStep: () => void
+) {
   // Initialize
   document.querySelector<HTMLDivElement>("#step1")!.innerHTML = step1Html;
   const buttonElement = document.querySelector<HTMLButtonElement>("#pkButton")!;
@@ -40,15 +43,22 @@ export async function setupStep1Display(activateNextStep: () => void) {
   // Event listeners
   buttonElement.addEventListener("click", async () => {
     toggleButton();
-    setPkText(
-      buttonState ? `${JSON.stringify(await getPublicKey(), null, 2)}` : ""
-    );
-    setSubtitleText(
-      buttonState
-        ? "This public key is persisted in IndexedDB - try refreshing to see that you'll always get the same public key result. The private key is not shown as it is not exposed. If you want to restart this demo with a new key pair, clear your IndexedDB storage."
-        : ""
-    );
-    activateNextStep();
+
+    if (buttonState) {
+      setPkText(
+        buttonState ? `${JSON.stringify(await getPublicKey(), null, 2)}` : ""
+      );
+      setSubtitleText(
+        buttonState
+          ? "This public key is persisted in IndexedDB - try refreshing to see that you'll always get the same public key result. The private key is not shown as it is not exposed. If you want to restart this demo with a new key pair, clear your IndexedDB storage."
+          : ""
+      );
+      activateNextStep();
+    } else {
+      setPkText("");
+      setSubtitleText("");
+      deactivateNextStep();
+    }
   });
 
   // Initialize

@@ -13,14 +13,20 @@ const step2Html = `
   <div id="jwtResult">
     <p id="jwtSubtitle"></p>
     <pre id="jwtDisplay"></pre>
-    <p>You can validate this JWT with the debugger at jwt.io using the public key from the previous section. Click the button below to pre-populate the above JWT in the JWT debugger automatically. Note that you'll need to copy over the public key manually:</p>
+    <p>You can validate this JWT with the debugger at jwt.io using the public key from the previous section. Click the button below to pre-populate the above JWT in the JWT debugger automatically. Note that you'll need to copy over the public key manually to validate the signature in the debugger</p>
     <a id="jwtLink" target='_blank' style="text:center"><img src='https://jwt.io/img/badge.svg' alt='jwt.io'></img></a>
   </div>
 </article>
 `;
 
+export function removeStep2Display() {
+  document.querySelector<HTMLDivElement>("#step2")!.innerHTML = "";
+  document.querySelector<HTMLDivElement>("#step3")!.innerHTML = "";
+}
+
 export async function setupStep2Display(
-  activateNextStep: (jwt: string) => void
+  activateNextStep: (jwt: string) => void,
+  deactivateNextStep: () => void
 ) {
   // Initialize
   document.querySelector<HTMLDivElement>("#step2")!.innerHTML = step2Html;
@@ -37,7 +43,7 @@ export async function setupStep2Display(
   const jwtLink = document.querySelector<HTMLLinkElement>("#jwtLink")!;
 
   // State
-  let buttonState: boolean = false;
+  let buttonState: boolean = true;
   let jwtText: string = "";
 
   // Handlers
@@ -95,6 +101,7 @@ export async function setupStep2Display(
         setSubtitleText("");
         setCodeDisplayText("");
         resetInputText();
+        deactivateNextStep();
       }
     } catch (e) {
       setSubtitleText(
@@ -108,8 +115,7 @@ export async function setupStep2Display(
 
   // Initialize
   toggleButton();
-  toggleButton();
-  setResultDisplay();
+  setResultDisplay(false);
   setCodeDisplayText("");
   setSubtitleText("");
   await setLinkDisplay("");
