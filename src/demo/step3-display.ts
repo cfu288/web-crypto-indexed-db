@@ -3,7 +3,7 @@ import { verifyJwt } from "../jwt-tools";
 const step3Html = `
 <article>
   <h2>3) Verify JWT</h2>
-  <p>Clicking the button below will attempt to validate the JWT using the public key from the previous section.</p>
+  <p>Clicking the button below will attempt to validate the JWT using the public key from the first step.</p>
   <button id="verifyButton" type="button"></button>
   <p id="verifyDisplay"></p>
 </article>
