@@ -10,8 +10,8 @@ const step2Html = `
     <input id="jwtInput" type="text" value='{"hello": "world"}' />
   </p>
   <button id="jwtButton" type="button"></button>
+  <p id="jwtSubtitle"></p>
   <div id="jwtResult">
-    <p id="jwtSubtitle"></p>
     <pre id="jwtDisplay"></pre>
     <p>You can validate this JWT with the debugger at jwt.io using the public key from the previous section. Click the button below to pre-populate the above JWT in the JWT debugger automatically. Note that you'll need to copy over the public key manually to validate the signature in the debugger</p>
     <a id="jwtLink" target='_blank' style="text:center"><img src='https://jwt.io/img/badge.svg' alt='jwt.io'></img></a>
@@ -58,26 +58,30 @@ export async function setupStep2Display(
   const setLinkDisplay = async (str: string) => {
     jwtLink.href = `https://jwt.io?access_token=${str}`;
   };
-  const setSubtitleText = (str: string, color?: string) => {
+  const setErrorText = (str: string, color?: string) => {
     subtitleElement.innerHTML = `${str}`;
+    subtitleElement.style.display = str ? "block" : "none";
     subtitleElement.style.color = color ? color : "black";
   };
   const setResultDisplay = (visible: boolean) => {
     jwtResultElement.style.display = visible ? "block" : "none";
   };
   const getInputTextAsJson = async () => {
-    // const pk = await getPublicKey();
     try {
-      return Promise.resolve({
-        ...JSON.parse(jwtInputElement.value),
-        // sub_jwk: pk,
-      });
+      const parsed = JSON.parse(jwtInputElement.value);
+      jwtInputElement.disabled = true;
+      return Promise.resolve(parsed);
     } catch (e) {
+      jwtInputElement.disabled = false;
       return Promise.reject(e);
     }
   };
   const resetInputText = () => {
     jwtInputElement.value = '{"hello": "world"}';
+    jwtInputElement.disabled = false;
+  };
+  const lockInputText = () => {
+    jwtInputElement.disabled = true;
   };
 
   // Event listeners
@@ -86,28 +90,25 @@ export async function setupStep2Display(
     try {
       if (buttonState) {
         const validJwtText = await getInputTextAsJson();
+        setResultDisplay(true);
         jwtText = `${await signJwt(validJwtText)}`;
         setCodeDisplayText(jwtText);
-        setResultDisplay(true);
-        setSubtitleText(
-          "Below is the signed JWT using the above body from input field and private key previously stored from IndexedDB."
-        );
+        setErrorText("");
         await setLinkDisplay(jwtText);
         activateNextStep(jwtText);
       } else {
         // Reset
         setResultDisplay(false);
-        await setLinkDisplay("");
-        setSubtitleText("");
-        setCodeDisplayText("");
+        setErrorText("");
         resetInputText();
         deactivateNextStep();
       }
     } catch (e) {
-      setSubtitleText(
+      setErrorText(
         "Invalid JSON provided. Please provide valid JSON for the JWT body.",
         "red"
       );
+      lockInputText();
       setCodeDisplayText("");
       return;
     }
@@ -117,6 +118,6 @@ export async function setupStep2Display(
   toggleButton();
   setResultDisplay(false);
   setCodeDisplayText("");
-  setSubtitleText("");
+  setErrorText("");
   await setLinkDisplay("");
 }
