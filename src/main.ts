@@ -1,48 +1,16 @@
 import { setupJWTDisplay } from "./demo/jwt-display";
 import { setupPKDisplay } from "./demo/pk-display";
+import { setupVerifyDisplay } from "./demo/verify-display";
 import { signJwt, verifyJwt } from "./jwt-tools";
 import { getPublicKey } from "./web-crypto";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-<div id="step1">
-  <article>
-    <h2>1) Generate public + private key pair</h2>
-    <button id="pkButton" type="button"></button>
-    <p id="publicKeySubtitle"></p>
-    <pre id="pkDisplay"></pre>
-  </article>
-</div>
+<div id="step1"></div>
 <div id="step2"></div>
 <div id="step3"></div>
 `;
 
-const step2Html = `
-<article>
-<h2>2) Sign JWT</h2>
-<p>
-  <label>JWT Body</label>
-  <input id="jwtInput" type="text" value='{"hello": "world"}' />
-</p>
-<button id="jwtButton" type="button"></button>
-<p id="jwtSubtitle"></p>
-<pre id="jwtDisplay"></pre>
-</article>
-`;
-
-setupPKDisplay(
-  document.querySelector<HTMLButtonElement>("#pkButton")!,
-  document.querySelector<HTMLDivElement>("#publicKeySubtitle")!,
-  document.querySelector<HTMLDivElement>("#pkDisplay")!,
-  () => {
-    document.querySelector<HTMLDivElement>("#step2")!.innerHTML = step2Html;
-    setupJWTDisplay(
-      document.querySelector<HTMLButtonElement>("#jwtButton")!,
-      document.querySelector<HTMLDivElement>("#jwtSubtitle")!,
-      document.querySelector<HTMLInputElement>("#jwtInput")!,
-      document.querySelector<HTMLDivElement>("#jwtDisplay")!
-    );
-  }
-);
+setupPKDisplay(() => setupJWTDisplay((jwt: string) => setupVerifyDisplay(jwt)));
 
 // // Run code in the browser console
 (async () => {

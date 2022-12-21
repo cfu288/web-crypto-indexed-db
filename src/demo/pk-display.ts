@@ -1,11 +1,23 @@
 import { getPublicKey } from "../web-crypto";
 
-export async function setupPKDisplay(
-  buttonElement: HTMLButtonElement,
-  subtitleElement: HTMLDivElement,
-  pkElement: HTMLDivElement,
-  activateNextStep: () => void
-) {
+const step1Html = `
+<article>
+  <h2>1) Generate public + private key pair</h2>
+  <p>The following button will check to see if a CryptoKey key pair already exists in IndexedDB. If it does, it will just return the existing CryptoKey object. If not, it will generate a new one and store it in IndexedDB.</p>
+  <button id="pkButton" type="button"></button>
+  <p id="publicKeySubtitle"></p>
+  <pre id="pkDisplay"></pre>
+</article>
+`;
+
+export async function setupPKDisplay(activateNextStep: () => void) {
+  // Initialize
+  document.querySelector<HTMLDivElement>("#step1")!.innerHTML = step1Html;
+  const buttonElement = document.querySelector<HTMLButtonElement>("#pkButton")!;
+  const subtitleElement =
+    document.querySelector<HTMLDivElement>("#publicKeySubtitle")!;
+  const pkElement = document.querySelector<HTMLInputElement>("#pkDisplay")!;
+
   // State
   let buttonState: boolean = true;
 
@@ -14,7 +26,7 @@ export async function setupPKDisplay(
     buttonState = !buttonState;
     const text = buttonState
       ? "Hide public key"
-      : "Generate key pair and show public";
+      : "Generate key pair and show public key";
     buttonElement.innerHTML = text;
   };
   const setPkText = (str: string) => {
@@ -33,7 +45,7 @@ export async function setupPKDisplay(
     );
     setSubtitleText(
       buttonState
-        ? "This public key is persisted in IndexedDB - try refreshing to see that you'll always get the same result. The private key is not shown as it is not exposed. If you want to restart this demo with a new key pair, clear your IndexedDB storage."
+        ? "This public key is persisted in IndexedDB - try refreshing to see that you'll always get the same public key result. The private key is not shown as it is not exposed. If you want to restart this demo with a new key pair, clear your IndexedDB storage."
         : ""
     );
     activateNextStep();
