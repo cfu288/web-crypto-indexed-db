@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="simple.css" />
     <title>WebCrypto + IndexedDB</title>
     <style></style>
-    <script type="module" crossorigin src="https://cfu288.github.io/web-crypto-indexed-db/assets/index-e141c9bd.js"></script>
+    <script type="module" crossorigin src="https://cfu288.github.io/web-crypto-indexed-db/assets/index-d953a511.js"></script>
   </head>
   <body>
     <header>
@@ -22,17 +22,17 @@
             target="_blank"
             >WebCrypto API's CryptoKey</a
           >
-          interface allows developers to securely create and persist public and
-          private keys in the browser. These keys can be used to sign and
-          validate JWTs, or to perform other cryptographic tasks, such as
-          encryption and decryption. Importantly, the private key can be kept
-          opaque and is not revealed to the end-user or the JavaScript runtime.
-          This means that developers can work with the CryptoKey interface
-          without having to handle the underlying keys directly.
+          interface allows developers to securely create public and private keys
+          in the browser. These keys can be used to sign and validate JWTs, or
+          to perform other cryptographic tasks, such as encryption and
+          decryption. Importantly, the private key can be kept opaque and is not
+          revealed to the end-user or the JavaScript runtime. This means that
+          developers can work with the CryptoKey interface without having to
+          handle the underlying keys directly.
         </p>
         <p>
-          One practical application of this is the ability to store the
-          CryptoKey object in IndexedDB for later use. This allows developers to
+          One neat application of this is the ability to store the CryptoKey
+          object in IndexedDB for later use. This allows developers to
           continuously sign JWTs with the same private key over multiple browser
           sessions, until the browser storage is cleared. This can be useful in
           scenarios like
