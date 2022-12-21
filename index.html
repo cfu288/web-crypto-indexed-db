@@ -23,9 +23,8 @@
         >
         interface of WebCrypto API is that it allows developers to interact with
         key pairs generated in the browser - you can sign, verify, encrypt, and
-        decrypt - without the need of revealing the value of the private key.
-        The private key remains opaque to the end-user and the JS runtime. The
-        private key itself can be set to not be extractable. Developers can work
+        decrypt - without revealing the value of the private key.
+        The private key remains opaque to the end-user and the JS runtime. Developers can work
         with the CryptoKey interface directly without having to worry directly
         handling the underlying keys.
       </p>
@@ -49,9 +48,9 @@
     <section>
       <h2>Demo</h2>
       <p>
-        In this demo, you should see a JWT being signed and validated using
-        public/private keys signed with WebCrypto as you click on the buttons
-        below. Note you need to have SSL enabled for this demo work - WebCrypto
+        In this demo, you will see a JWT being signed and validated using
+        public/private keys created with the WebCrypto browser API as you click on the buttons
+        below. Note that you need to have SSL enabled for this demo to work - WebCrypto
         is disabled in non SSL environments.
       </p>
       <br />
