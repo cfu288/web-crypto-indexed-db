@@ -24,17 +24,24 @@
         JWT completely in the browser.
       </p>
       <p>
-        The cool thing about using the CryptoKey interface of WebCrypto is that
-        although we can use the key pair to sign and verify, the private key
-        remains opaque to the end-user and the JS runtime. The private key
-        itself is not extractable. We can store the CryptoKey object in
-        IndexedDB for later retrieval and use.
+        The cool thing about using the
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/CryptoKey"
+          >CryptoKey</a
+        >
+        interface of WebCrypto API is that it allows developers to interact with
+        key pairs generated in the browser - you can sign, verify, encrypt, and
+        decrypt - without the need of revealing the value of the private key.
+        The private key remains opaque to the end-user and the JS runtime. The
+        private key itself can be set to not be extractable. Developers can work
+        with the CryptoKey interface directly without having to worry directly
+        handling the underlying keys.
       </p>
       <p>
-        Because the private key is persisted, we can do things like continuously
-        sign JWT's with the same private key over multiple browser sessions
-        (until browser storage is cleared). This can be handy for some use cases
-        like
+        We can store this CryptoKey object in IndexedDB for later retrieval and
+        use. Because we can persist the CryptoKey, we can do things like
+        continuously sign JWT's with the same private key over multiple browser
+        sessions (until browser storage is cleared). This can be handy for some
+        use cases like
         <a href="https://www.rfc-editor.org/rfc/rfc7591"
           >OAuth2's Dynamic Client Registration Protocol</a
         >.
@@ -42,7 +49,7 @@
       <p>
         <a
           href="https://github.com/cfu288/web-crypto-indexed-db/blob/main/src/web-crypto.ts"
-          >See the code</a
+          >See the code behind this demo</a
         >
       </p>
     </section>
